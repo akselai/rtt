@@ -1,25 +1,26 @@
-var canvas;
+let canvas;
 
-var subgroup = [2, 3, 5];
-var mapping = [2, 3, 5];
-var subgroupDotPos = [];
-var whichDot = -1;
+const subgroup = [2, 3, 5];
+const mapping = [2, 3, 5];
+const subgroupDotPos = [];
+let whichDot = -1;
+let whichDotIndex = -1;
 
-var xshift = -20;
-var xscale = 50;
+let xShift = -20;
+let xScale = 50;
 
-var line_y_pos = 100;
-var line_height = 20; // line vertical padding
+const lineYPos = 100;
+const lineHeight = 20; // line vertical padding
 
-var mfont;
-var smoothNum;
+let mainFont;
+let smoothNum;
 
 function setup() {
     canvas = createCanvas(800, 600);
     stylizeCanvas();
     colorMode(HSB, 255);
-    mfont = loadFont("data/roboto_regular.ttf");
-    textFont(mfont);
+    mainFont = loadFont("data/roboto_regular.ttf");
+    textFont(mainFont);
     smoothNum = listSmooth(subgroup, 1, 200);
 }
 
@@ -32,37 +33,37 @@ function stylizeCanvas() {
 function draw() {
 //if(frameCount > 100) debugger;
     background(255);
-    line(0, line_y_pos, 800, 100);
+    line(0, lineYPos, 800, 100);
     textAlign(CENTER);
     for (let i = 0; i < mapping.length; i++) {
-        subgroupDotPos[i] = xscale * mapping[i] - xshift;
+        subgroupDotPos[i] = xScale * mapping[i] - xShift;
     }
-    var magnify = pow(10, round(log(xscale) / log(10)) - 1);
+    const magnify = pow(10, round(log(xScale) / log(10)) - 1);
 
-    for (let i = round(xshift / xscale * magnify) / magnify;
-         i <= round((800 + xshift) / xscale * magnify) / magnify;
+    for (let i = round(xShift / xScale * magnify) / magnify;
+         i <= round((800 + xShift) / xScale * magnify) / magnify;
          i += 1 / magnify) {
         stroke(141, 255, 255, 180);
-        if (round(i * magnify) % 10 == 0) {
-            line(xscale * i - xshift, 100, xscale * i - xshift, 130);
+        if (round(i * magnify) % 10 === 0) {
+            line(xScale * i - xShift, 100, xScale * i - xShift, 130);
             fill(141, 255, 255, 180);
             noStroke();
-            text(round(i * magnify) / magnify, xscale * i - xshift, 150);
+            text(round(i * magnify) / magnify, xScale * i - xShift, 150);
         } else {
-            line(xscale * i - xshift, 100, xscale * i - xshift, 115);
+            line(xScale * i - xShift, 100, xScale * i - xShift, 115);
         }
     }
 
     for (let i = 0; i <= smoothNum.length; i++) {
         fill(0);
         noStroke();
-        text(smoothNum[i], xscale * mapInteger(smoothNum[i]) - xshift, 80);
+        text(smoothNum[i], xScale * mapInteger(smoothNum[i]) - xShift, 80);
         stroke(0);
         fill(((smoothNum[i] * 17) % 64) / 64 * 255, 255, 255);
-        if (whichDot != smoothNum[i]) {
+        if (whichDot !== smoothNum[i]) {
             fill(255);
         }
-        circle(xscale * mapInteger(smoothNum[i]) - xshift, 100, 10);
+        circle(xScale * mapInteger(smoothNum[i]) - xShift, 100, 10);
     }
 }
 
@@ -71,13 +72,13 @@ function drawDots() {
 }
 
 function mapInteger(n) {
-    var factors = primeFactors(n);
-    var m = 1;
+    const factors = primeFactors(n);
+    let m = 1;
     for (let i = 0; i < factors.length; i++) {
-        var f = factors[i];
-        var a = subgroup.indexOf(f);
+        const f = factors[i];
+        const a = subgroup.indexOf(f);
         // console.log(a); // stop it's making everything lag
-        if (a != -1) {
+        if (a !== -1) {
             m *= mapping[a];
         } else {
             m *= factors[i]
@@ -112,15 +113,15 @@ function listSmooth(primes, lowest, highest) {
                 }
                 higher[i] = lar;
             }
-            result = [];
+            let result = [];
             for (let i = 0; i <= x21; i++) {
                 for (let j = 0; j <= x22; j++) {
                     let k = higher[i][j];
                     // k >= (lower[i] == undefined || lower[i][j] <= 0 ? 0 : lower[i][j])
-                    if (lower[i] == undefined) {
+                    if (lower[i] === undefined) {
                         lower[i] = [];
                     }
-                    if (lower[i][j] == undefined) {
+                    if (lower[i][j] === undefined) {
                         lower[i][j] = 0;
                     }
                     while (k >= 0) {
@@ -130,7 +131,6 @@ function listSmooth(primes, lowest, highest) {
                 }
             }
             return result.sort((a, b) => a - b);
-            break;
         default:
             return;
     }
@@ -142,7 +142,7 @@ function primeFactors(n) {
     let divisor = 2;
 
     while (n >= 2) {
-        if (n % divisor == 0) {
+        if (n % divisor === 0) {
             factors.push(divisor);
             n = n / divisor;
         } else {
@@ -153,10 +153,10 @@ function primeFactors(n) {
 }
 
 /* Function to calculate (base^exponent)%modulus */
-function modular_pow(base, exponent, modulus) {
+function modularPow(base, exponent, modulus) {
     let result = 1;
     while (exponent > 0) {
-        if (exponent % 2 == 1) {
+        if (exponent % 2 === 1) {
             result = (result * base) % modulus;
         }
         exponent = exponent >> 1;
@@ -166,10 +166,10 @@ function modular_pow(base, exponent, modulus) {
 }
 
 function PollardRho(n) {
-    if (n == 1) {
+    if (n === 1) {
         return n;
     }
-    if (n % 2 == 0) {
+    if (n % 2 === 0) {
         return 2;
     }
 
@@ -179,15 +179,15 @@ function PollardRho(n) {
     let c = (Math.floor(Math.random() * (-n + 1)));
 
     let d = 1;
-    while (d == 1) {
-        x = (modular_pow(x, 2, n) + c + n) % n;
+    while (d === 1) {
+        x = (modularPow(x, 2, n) + c + n) % n;
 
-        y = (modular_pow(y, 2, n) + c + n) % n;
-        y = (modular_pow(y, 2, n) + c + n) % n;
+        y = (modularPow(y, 2, n) + c + n) % n;
+        y = (modularPow(y, 2, n) + c + n) % n;
 
         d = __gcd(Math.abs(x - y), n);
 
-        if (d == n) {
+        if (d === n) {
             return PollardRho(n);
         }
     }
@@ -196,43 +196,47 @@ function PollardRho(n) {
 
 // Recursive function to return gcd of a and b
 function __gcd(a, b) {
-    return b == 0 ? a : __gcd(b, a % b);
+    return b === 0 ? a : __gcd(b, a % b);
 }
 
 function mouseMoved() {
-    whichDot = is_dot_collided()
+    updateDotCollision();
 }
 
 function mouseDragged() {
-    var dx = mouseX - pmouseX;
+    const dx = mouseX - pmouseX;
     if (whichDot >= 0) { // on god
-        mapping[i] += dx / xscale;
-    } else {
-        scroll_all(dx);
+        mapping[whichDotIndex] += dx / xScale;
+    } else { // fr fr
+        scrollAll(dx);
     }
 }
 
 function mouseWheel() {
     let f = pow(1.06, -event.delta / 30);
-    xshift = constrain((xshift + mouseX) * f - mouseX,
+    xShift = constrain((xShift + mouseX) * f - mouseX,
         -40, Infinity);
-    xscale = xscale * f;
+    xScale = xScale * f;
 }
 
-function scroll_all(dx) {
-    xshift -= dx;
-    xshift = constrain(xshift, -40, Infinity);
+function scrollAll(dx) {
+    xShift -= dx;
+    xShift = constrain(xShift, -40, Infinity);
 }
 
-function is_dot_collided() {
-    for (i = 0; i < subgroupDotPos.length; i++) {
+function updateDotCollision() {
+    for (let i = 0; i < subgroupDotPos.length; i++) {
         if (
             abs(mouseX - subgroupDotPos[i]) < 20 &&
-            mouseY > line_y_pos - line_height &&
-            mouseY < line_y_pos + line_height
+            mouseY > lineYPos - lineHeight &&
+            mouseY < lineYPos + lineHeight
         ) {
-            return subgroup[i];
+            whichDot = subgroup[i];
+            whichDotIndex = i;
+            return;
         }
     }
-    return -1;
+
+    whichDot = -1;
+    whichDotIndex = -1;
 }
