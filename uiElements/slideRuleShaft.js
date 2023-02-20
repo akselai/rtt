@@ -1,3 +1,10 @@
+class SlideRuleShaft {
+    /*  the class for an individual slide rule segment. 
+        grouping information is encoded in a "wrapper" class
+        called slideRule.js.
+    */
+    
+    // abstract
     subgroup = []; // = [2, 3, 5]; // draggable control points
     mapping = []; // = [2, pow(2, 19/12f), pow(2, 28/12f)];
 
