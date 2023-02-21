@@ -4,9 +4,9 @@ class Interval {
             this.monzo = expression;
             this.subgroup = subgroup;
         } else if (expression.indexOf('/') > -1) {
-            let rator = expression.split("/");
-            let n = primeFactors(rator[0]);
-            let d = primeFactors(rator[1]);
+            let ator = expression.split("/");
+            let n = primeFactors(ator[0]); // numerator
+            let d = primeFactors(ator[1]); // denominator
             this.subgroup = removeDuplicates(n.concat(d)).sort((a, b) => a - b);
             this.monzo = [];
             for (let i = 0; i < this.subgroup.length; i++) {
