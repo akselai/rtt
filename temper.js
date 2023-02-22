@@ -1,6 +1,6 @@
 function setup() {
-    let x = new BigNumber('10000000000000000');
-    let y = new BigNumber('90071992547409910');
+    let x = new Decimal('1');
+    let y = new Decimal('10');
     console.log(listSmooth([3, 5, 7], x, y));
 }
 
@@ -17,7 +17,7 @@ function primeFactors(n) {
     let factors = [];
     let divisor = 2;
 
-    while (n.isGreaterThanOrEqualTo(2)) {
+    while (n.greaterThanOrEqualTo(2)) {
         if (n.mod(divisor).isZero()) {
             factors.push(divisor);
             n = n.div(divisor);
@@ -28,42 +28,34 @@ function primeFactors(n) {
     return factors;
 }
 
-const firstHundredPrimes =
-    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
-        31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
-        73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
-        127, 131, 137, 139, 149, 151, 157, 163, 167, 173,
-        179, 181, 191, 193, 197, 199, 211, 223, 227, 229,
-        233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
-        283, 293, 307, 311, 313, 317, 331, 337, 347, 349,
-        353, 359, 367, 373, 379, 383, 389, 397, 401, 409,
-        419, 421, 431, 433, 439, 443, 449, 457, 461, 463,
-        467, 479, 487, 491, 499, 503, 509, 521, 523, 541];
-
-function nthPrime(n) {
-    if (n <= 100) return firstHundredPrimes[n - 1];
-    let counter = 0;
-    if (n === 1) return 2;
-    for (let i = 3; true; i += 2) {
-        if (primeFactors(i).length === 1) {
-            counter++;
-            if (counter === (n - 1)) return i;
+function mapInteger(n, subgroup, mapping) {
+    const factors = primeFactors(n);
+    let m = 1;
+    for (let i = 0; i < factors.length; i++) {
+        const f = factors[i];
+        const a = subgroup.indexOf(f);
+        // console.log(a); // stop it's making everything lag
+        if (a !== -1) {
+            m = m.mul(mapping[a]);
+        } else {
+            m = m.mul(factors[i]);
         }
     }
+    return m;
 }
 
 function listSmooth(primes, lowest, highest) {
-    let __l = log(lowest.toNumber());
-    let __h = log(highest.toNumber());
+    let __l = lowest.ln();
+    let __h = highest.ln();
     switch (primes.length) {
         case 3:
             let p1 = primes[0];
             let p2 = primes[1];
             let p3 = primes[2];
             
-            let bp1 = BigNumber(p1);
-            let bp2 = BigNumber(p2);
-            let bp3 = BigNumber(p3);
+            let bp1 = Decimal(p1);
+            let bp2 = Decimal(p2);
+            let bp3 = Decimal(p3);
             
             let x11 = ceil(__l / log(p1));
             let x12 = ceil(__l / log(p2));
@@ -97,12 +89,12 @@ function listSmooth(primes, lowest, highest) {
                         lower[i][j] = 0;
                     }
                     while (k >= 0) {
-                        result[result.length] = bp1.pow(i).times(bp2.pow(j)).times(bp3.pow(k));
+                        result[result.length] = bp1.pow(i).mul(bp2.pow(j)).mul(bp3.pow(k));
                         k--;
                     }
                 }
             }
-            return result.sort((a, b) => a.isGreaterThan(b));
+            return result.sort((a, b) => a.greaterThan(b));
         default:
             return;
     }
