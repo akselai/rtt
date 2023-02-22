@@ -1,11 +1,26 @@
+let mainFont;
+
+
 function setup() {
+    mainFont = loadFont("data/roboto_regular.ttf");
+    stylizeCanvas();
+    size(1000, 800);
+    textFont(mainFont);
+
     let x = new Decimal('1');
     let y = new Decimal('10');
-    console.log(listSmooth([3, 5, 7], x, y));
+}
+
+function stylizeCanvas() {
+    canvas.style('margin', '20px auto');
+    canvas.style('display', 'block');
+    canvas.style('border-radius', '8px');
 }
 
 function draw() {
-      
+    background(255);
+    fill(0);
+    text("git gud", 20, 20)
 }
 
 function gcd(a, b) {
@@ -52,11 +67,11 @@ function listSmooth(primes, lowest, highest) {
             let p1 = primes[0];
             let p2 = primes[1];
             let p3 = primes[2];
-            
+
             let bp1 = Decimal(p1);
             let bp2 = Decimal(p2);
             let bp3 = Decimal(p3);
-            
+
             let x11 = ceil(__l / log(p1));
             let x12 = ceil(__l / log(p2));
             let lower = [[]];
