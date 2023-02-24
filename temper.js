@@ -1,10 +1,13 @@
+let canvas;
 let mainFont;
 
+let keyWidth = 50;
 
 function setup() {
+    canvas = createCanvas(1200, 600);
+    
     mainFont = loadFont("data/roboto_regular.ttf");
     stylizeCanvas();
-    size(1000, 800);
     textFont(mainFont);
 
     let x = new Decimal('1');
@@ -20,7 +23,30 @@ function stylizeCanvas() {
 function draw() {
     background(255);
     fill(0);
-    text("git gud", 20, 20)
+    drawKeys();
+}
+
+function drawKeys() {
+    stroke(0);
+    fill(255);
+    for (let i = 0; i < 20; i++) {
+        rect(30 + keyWidth * i, 375, keyWidth, 160);
+    }
+}
+
+let osc;
+function mouseClicked() {
+    if(insideRect(30, 375, 30 + keyWidth, 375 + 160)) {
+        osc = new p5.Oscillator('sawtooth');
+        osc.freq(440, 0);
+        osc.amp(5e-2, 0);
+        osc.start();
+        osc.amp(0, 0.5);
+    }
+}
+
+function insideRect(a, b, c, d) {
+    return mouseX >= a && mouseY >= b && mouseX <= c && mouseY <= d;
 }
 
 function gcd(a, b) {
