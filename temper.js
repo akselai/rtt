@@ -35,14 +35,37 @@ function drawKeys() {
 }
 
 let osc;
+let freq = [1100/10, 1100/9, 1100/8, 1100/7, 1100/6, 1100/5, 1100/4, 1100/3];
 function mouseClicked() {
-    if(insideRect(30, 375, 30 + keyWidth, 375 + 160)) {
-        osc = new p5.Oscillator('sawtooth');
-        osc.freq(440, 0);
+    for (let i = 0; i < 8; i++) {
+        if(insideRect(30 + keyWidth * i, 375, 30 + keyWidth + keyWidth * i, 375 + 160)) {
+            playNote(freq[i]);
+        }
+    }
+}
+function keyPressed() {
+    switch (key) {
+        case 'z': playNote(freq[0]); break;
+        case 'x': playNote(freq[1]); break;
+        case 'c': playNote(freq[2]); break;
+        case 'v': playNote(freq[3]); break;
+        case 'b': playNote(freq[4]); break;
+        case 'n': playNote(freq[5]); break;
+        case 'm': playNote(freq[6]); break;
+        case ',': playNote(freq[7]); break;
+        default: ;
+    }
+}
+// keyReleased????
+function lightUp() {
+    // sorry cannot do this
+}
+function playNote(freq_) {
+    osc = new p5.Oscillator('sawtooth');
+        osc.freq(freq_, 0);
         osc.amp(5e-2, 0);
         osc.start();
         osc.amp(0, 0.5);
-    }
 }
 
 function insideRect(a, b, c, d) {
