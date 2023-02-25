@@ -63,7 +63,7 @@ function lightUp() {
 function playNote(freq_) {
     osc = new p5.Oscillator('sawtooth');
         osc.freq(freq_, 0);
-        osc.amp(0.5, 0);
+        osc.amp(0.1, 0);
         osc.start();
         osc.amp(0, 1.5);
 }
