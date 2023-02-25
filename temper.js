@@ -35,7 +35,7 @@ function drawKeys() {
 }
 
 let osc;
-let freq = [1100/10, 1100/9, 1100/8, 1100/7, 1100/6, 1100/5, 1100/4, 1100/3];
+let freq = [1100/8, 1100/7, 1100/6, 1100/5, 1100/4, 1100/3, 1100/2, 1100/1];
 function mouseClicked() {
     for (let i = 0; i < 8; i++) {
         if(insideRect(30 + keyWidth * i, 375, 30 + keyWidth + keyWidth * i, 375 + 160)) {
@@ -63,9 +63,9 @@ function lightUp() {
 function playNote(freq_) {
     osc = new p5.Oscillator('sawtooth');
         osc.freq(freq_, 0);
-        osc.amp(5e-2, 0);
+        osc.amp(0.5, 0);
         osc.start();
-        osc.amp(0, 0.5);
+        osc.amp(0, 1.5);
 }
 
 function insideRect(a, b, c, d) {
