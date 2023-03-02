@@ -6,7 +6,7 @@ let keyWidth = 50;
 function setup() {
     canvas = createCanvas(1200, 600);
     
-    WebMidi.enable();//.then(onEnabled).catch(err => alert(err));
+    WebMidi.enable().then(onEnabled).catch(err => alert(err));
     
     mainFont = loadFont("data/roboto_regular.ttf");
     stylizeCanvas();
@@ -37,7 +37,6 @@ function drawKeys() {
 }
 
 function onEnabled() {
-/*
     // Display available MIDI input devices
     if (WebMidi.inputs.length < 1) {
         document.body.innerHTML+= "No device detected.";
@@ -46,7 +45,6 @@ function onEnabled() {
             document.body.innerHTML+= `${index}: ${device.name} <br>`;
         });
     }
-    */
 }
 
 let osc;
