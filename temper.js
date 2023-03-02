@@ -6,6 +6,8 @@ let keyWidth = 50;
 function setup() {
     canvas = createCanvas(1200, 600);
     
+    WebMidi.enable();//.then(onEnabled).catch(err => alert(err));
+    
     mainFont = loadFont("data/roboto_regular.ttf");
     stylizeCanvas();
     textFont(mainFont);
@@ -32,6 +34,19 @@ function drawKeys() {
     for (let i = 0; i < 20; i++) {
         rect(30 + keyWidth * i, 375, keyWidth, 160);
     }
+}
+
+function onEnabled() {
+/*
+    // Display available MIDI input devices
+    if (WebMidi.inputs.length < 1) {
+        document.body.innerHTML+= "No device detected.";
+    } else {
+        WebMidi.inputs.forEach((device, index) => {
+            document.body.innerHTML+= `${index}: ${device.name} <br>`;
+        });
+    }
+    */
 }
 
 let osc;
