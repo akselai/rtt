@@ -39,10 +39,10 @@ function drawKeys() {
 function onEnabled() {
     // Display available MIDI input devices
     if (WebMidi.inputs.length < 1) {
-        document.body.innerHTML+= "No device detected.";
+        console.log("No device detected.");
     } else {
         WebMidi.inputs.forEach((device, index) => {
-            document.body.innerHTML+= `${index}: ${device.name} <br>`;
+            console.log(index + " " + device.name);
         });
     }
 }

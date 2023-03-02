@@ -29,6 +29,8 @@ class LinearKeyboard {
         "i": 72, "I": 72,
     };
     
-    midiFreq = ;
+    midiFreq = [];
     keyMidi = zxcvbn_qwerty;
+
+    
 }
