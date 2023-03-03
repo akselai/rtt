@@ -45,6 +45,10 @@ function onEnabled() {
             console.log(index + " " + device.name);
         });
     }
+    
+    WebMidi.inputs[1].addListener("noteon", e => {
+        console.log(e.note.name);
+    }, {channels: [0, 1, 2, 3]});
 }
 
 let osc;
