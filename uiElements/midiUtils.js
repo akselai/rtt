@@ -4,7 +4,7 @@ class midiUtils {
         initializeFreqsEqualTemp();
     }
     
-    const zxcvbn_qwerty = {
+    keyMidi = {
         "z": 48, "Z": 48,
         "s": 49, "S": 49,
         "x": 50, "X": 50,
@@ -34,24 +34,23 @@ class midiUtils {
     };
     
     midiFreq = [];
-    keyMidi = zxcvbn_qwerty;
 
     initializeFreqs() {
         for (let i = 0; i < 128; i++) {
-            midiFreq[i] = 440;
+            this.midiFreq[i] = 440;
         }
     }
 
     initializeFreqsEqualTemp() {
         for (let i = 0; i < 128; i++) {
-            midiFreq[i] = midiNumToFreq(i);
+            this.midiFreq[i] = midiNumToFreq(i);
         }
     }
 
     noteOn(n) {
         if (!(n === undefined)) {
         osc = new p5.Oscillator('sawtooth');
-        osc.freq(midiFreq[n], 0);
+        osc.freq(this.midiFreq[n], 0);
         osc.amp(0.1, 0);
         osc.start();
         osc.amp(0, 1.5);

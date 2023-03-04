@@ -63,7 +63,7 @@ function mouseClicked() {
     }
 }
 
-let k = midiUtils();
+let k = new midiUtils();
 function keyPressed() {
     k.noteOn(k.keyMidi[key]);
 }
