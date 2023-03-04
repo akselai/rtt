@@ -6,7 +6,7 @@ let keyWidth = 50;
 function setup() {
     canvas = createCanvas(1200, 600);
     
-    WebMidi.enable().then(onEnabled).catch(err => alert(err));
+    // WebMidi.enable().then(onEnabled).catch(err => alert(err));
     
     mainFont = loadFont("data/roboto_regular.ttf");
     stylizeCanvas();
@@ -62,19 +62,12 @@ function mouseClicked() {
         }
     }
 }
+
+let k = midiUtils();
 function keyPressed() {
-    switch (key) {
-        case 'z': playNote(freq[0]); break;
-        case 'x': playNote(freq[1]); break;
-        case 'c': playNote(freq[2]); break;
-        case 'v': playNote(freq[3]); break;
-        case 'b': playNote(freq[4]); break;
-        case 'n': playNote(freq[5]); break;
-        case 'm': playNote(freq[6]); break;
-        case ',': playNote(freq[7]); break;
-        default: ;
-    }
+    k.noteOn(k.keyMidi[key]);
 }
+
 // keyReleased????
 function lightUp() {
     // sorry cannot do this
@@ -126,7 +119,7 @@ function mapInteger(n, subgroup, mapping) {
     }
     return m;
 }
-
+/* // this function is better off dead
 function listSmooth(primes, lowest, highest) {
     let __l = lowest.ln();
     let __h = highest.ln();
@@ -181,4 +174,9 @@ function listSmooth(primes, lowest, highest) {
         default:
             return;
     }
+}
+*/
+
+function midiNumToFreq(n) {
+    return 440 * pow(2, (n - 69) / 12);
 }
