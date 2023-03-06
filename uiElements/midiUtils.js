@@ -35,7 +35,7 @@ class midiUtils {
     
     midiFreq = [];
 
-    let midiNumToFreq = (n) -> (440 * pow(2, (n - 69) / 12));
+    midiNumToFreq = (n) => (440 * pow(2, (n - 69) / 12));
 
     initializeFreqs() {
         for (let i = 0; i < 128; i++) {
@@ -45,8 +45,8 @@ class midiUtils {
 
     initializeFreqsEqualTemp() {
         for (let i = 0; i < 128; i++) {
-        console.log(midiNumToFreq(i));
-            this.midiFreq[i] = midiNumToFreq(i);
+        console.log(this.midiNumToFreq(i));
+            this.midiFreq[i] = this.midiNumToFreq(i);
         }
     }
 
