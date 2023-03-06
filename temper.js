@@ -27,6 +27,14 @@ function draw() {
     background(255);
     fill(0);
     drawKeys();
+    
+    if(frameCount == 1) {
+        osc = new p5.Oscillator('sawtooth');
+        osc.freq(100, 0);
+        osc.amp(0.1, 0);
+        osc.start();
+        osc.amp(0, 1.5);
+    }
 }
 
 function drawKeys() {
