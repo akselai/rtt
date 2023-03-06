@@ -2,7 +2,7 @@ let canvas;
 let mainFont;
 
 let keyWidth = 50;
-
+let k;
 function setup() {
     canvas = createCanvas(1200, 600);
     
@@ -14,6 +14,7 @@ function setup() {
 
     let x = new Decimal('1');
     let y = new Decimal('10');
+    k = new midiUtils();
 }
 
 function stylizeCanvas() {
@@ -63,9 +64,10 @@ function mouseClicked() {
     }
 }
 
-let k = new midiUtils();
 function keyPressed() {
-    k.noteOn(k.keyMidi[key]);
+    if (!(k === undefined)) {
+        k.noteOn(k.keyMidi[key]);
+    }
 }
 
 // keyReleased????
@@ -176,7 +178,3 @@ function listSmooth(primes, lowest, highest) {
     }
 }
 */
-
-function midiNumToFreq(n) {
-    return 440 * pow(2, (n - 69) / 12);
-}

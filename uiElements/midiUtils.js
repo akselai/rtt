@@ -1,7 +1,7 @@
 class midiUtils {
     
-    midiUtils() {
-        initializeFreqsEqualTemp();
+    constructor() {
+        this.initializeFreqsEqualTemp();
     }
     
     keyMidi = {
@@ -35,6 +35,8 @@ class midiUtils {
     
     midiFreq = [];
 
+    let midiNumToFreq = (n) -> (440 * pow(2, (n - 69) / 12));
+
     initializeFreqs() {
         for (let i = 0; i < 128; i++) {
             this.midiFreq[i] = 440;
@@ -43,6 +45,7 @@ class midiUtils {
 
     initializeFreqsEqualTemp() {
         for (let i = 0; i < 128; i++) {
+        console.log(midiNumToFreq(i));
             this.midiFreq[i] = midiNumToFreq(i);
         }
     }
