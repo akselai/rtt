@@ -3,6 +3,8 @@ let mainFont;
 
 let keyWidth = 50;
 let k;
+
+let chooseInputDevice;
 function setup() {
     canvas = createCanvas(1200, 600);
     
@@ -15,6 +17,11 @@ function setup() {
     let x = new Decimal('1');
     let y = new Decimal('10');
     k = new midiUtils();
+    
+    chooseInputDevice = createSelect();
+    chooseInputDevice.position(100, 100);
+    chooseInputDevice.option('not your option!');
+    chooseInputDevice.changed(updateInputDevice);
 }
 
 function stylizeCanvas() {
@@ -28,7 +35,10 @@ function draw() {
     fill(0);
     drawKeys();
     
-    if(frameCount % 100 == 1) {
+    if(frameCount % 2 == 1) {
+        chooseInputDevice.option('not your option!');
+    } else {
+        chooseInputDevice.disable('not your option!');
     }
 }
 
@@ -47,14 +57,18 @@ function onEnabled() {
     } else {
         WebMidi.inputs.forEach((device, index) => {
             console.log(index + " " + device.name);
+            chooseInputDevice.option(device.name);
         });
     }
     console.log("bruh");
+}
+
+function updateInputDevice() {
     let mySynth = WebMidi.inputs[1];
     console.log(mySynth);
-  mySynth.channels[1].addListener("noteon", e => {
-    console.log(e.note);
-  });
+    mySynth.channels[1].addListener("noteon", e => {
+        console.log(e.note);
+    });
 }
 
 let osc;
